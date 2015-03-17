@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+# Upload files
+gem 'carrierwave', '~> 0.10.0'
 # PDF generation
 gem 'prawn', '~> 2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
