@@ -1,0 +1,2 @@
+module GranitesHelper
+end

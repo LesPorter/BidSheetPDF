@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Logo:</strong>
+  <%= @bid.logo %>
+</p>
+
+<p>
+  <strong>Client name:</strong>
+  <%= @bid.client_name %>
+</p>
+
+<p>
+  <strong>Project name:</strong>
+  <%= @bid.project_name %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @bid.date %>
+</p>
+
+<p>
+  <strong>Cabinet cost:</strong>
+  <%= @bid.cabinet_cost %>
+</p>
+
+<p>
+  <strong>Granite cost:</strong>
+  <%= @bid.granite_cost %>
+</p>
+
+<p>
+  <strong>Tax cost:</strong>
+  <%= @bid.tax_cost %>
+</p>
+
+<p>
+  <strong>Total cost:</strong>
+  <%= @bid.total_cost %>
+</p>
+
+<p>
+  <strong>Conditions:</strong>
+  <%= @bid.conditions %>
+</p>
+
+<p>
+  <strong>Cabinet mix:</strong>
+  <%= @bid.cabinet_mix %>
+</p>
+
+<%= link_to 'Edit', edit_bid_path(@bid) %> |
+<%= link_to 'Back', bids_path %>

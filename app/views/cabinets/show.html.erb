@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @cabinet.name %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @cabinet.image %>
+</p>
+
+<p>
+  <strong>Specs:</strong>
+  <%= @cabinet.specs %>
+</p>
+
+<%= link_to 'Edit', edit_cabinet_path(@cabinet) %> |
+<%= link_to 'Back', cabinets_path %>

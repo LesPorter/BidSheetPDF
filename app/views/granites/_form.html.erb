@@ -1,0 +1,25 @@
+<%= form_for(@granite) do |f| %>
+  <% if @granite.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@granite.errors.count, "error") %> prohibited this granite from being saved:</h2>
+
+      <ul>
+      <% @granite.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br>
+    <%= f.text_field :image %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
