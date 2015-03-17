@@ -10,6 +10,17 @@ class BidsController < ApplicationController
   # GET /bids/1
   # GET /bids/1.json
   def show
+    
+    # Create the document object
+    pdf = Prawn::Document.new
+    pdf.text "Hello World."
+    
+    # Produce the PDF
+    # -------------------------------------------------------------------------
+    
+    # Use the bid ID to name the PDF file
+    pdf.render_file "public/pdfs/" + @bid.id.to_s + ".pdf"
+    
   end
 
   # GET /bids/new
@@ -69,6 +80,6 @@ class BidsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bid_params
-      params.require(:bid).permit(:logo, :client_name, :project_name, :date, :cabinet_cost, :granite_cost, :tax_cost, :total_cost, :conditions, :cabinet_mix)
+      params.require(:bid).permit(:logo, :client_name, :project_name, :date, :cabinet_cost, :granite_cost, :tax_cost, :total_cost, :conditions, :cabinet_mix, :cabinet_id, :granite_id)
     end
 end
