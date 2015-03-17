@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317170649) do
+ActiveRecord::Schema.define(version: 20150317180145) do
 
   create_table "bids", force: true do |t|
     t.string   "logo"
@@ -26,7 +26,12 @@ ActiveRecord::Schema.define(version: 20150317170649) do
     t.text     "cabinet_mix"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cabinet_id"
+    t.integer  "granite_id"
   end
+  
+  add_index "bids", ["cabinet_id"], name: "index_bids_on_cabinet_id"
+  add_index "bids", ["granite_id"], name: "index_bids_on_granite_id"
 
   create_table "cabinets", force: true do |t|
     t.string   "name"
