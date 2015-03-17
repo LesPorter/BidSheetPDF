@@ -14,7 +14,7 @@
     <% @cabinets.each do |cabinet| %>
       <tr>
         <td><%= cabinet.name %></td>
-        <td><%= cabinet.image %></td>
+        <td><%= image_tag(cabinet.image, :width => 50) if cabinet.image.present? %></td>
         <td><%= cabinet.specs %></td>
         <td><%= link_to 'Show', cabinet %></td>
         <td><%= link_to 'Edit', edit_cabinet_path(cabinet) %></td>

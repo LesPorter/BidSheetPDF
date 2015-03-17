@@ -7,7 +7,7 @@
 
 <p>
   <strong>Image:</strong>
-  <%= @granite.image %>
+  <%= image_tag(@granite.image, :width => 200) if @granite.image.present? %>
 </p>
 
 <%= link_to 'Edit', edit_granite_path(@granite) %> |

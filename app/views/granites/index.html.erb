@@ -13,7 +13,7 @@
     <% @granites.each do |granite| %>
       <tr>
         <td><%= granite.name %></td>
-        <td><%= granite.image %></td>
+        <td><%= image_tag(granite.image, :width => 50) if granite.image.present? %></td>
         <td><%= link_to 'Show', granite %></td>
         <td><%= link_to 'Edit', edit_granite_path(granite) %></td>
         <td><%= link_to 'Destroy', granite, method: :delete, data: { confirm: 'Are you sure?' } %></td>

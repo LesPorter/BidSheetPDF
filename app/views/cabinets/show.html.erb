@@ -5,9 +5,14 @@
   <%= @cabinet.name %>
 </p>
 
-<p>
+<!--<p>
   <strong>Image:</strong>
   <%= @cabinet.image %>
+</p>-->
+
+<p>
+  <strong>Photo:</strong>
+  <%= image_tag(@cabinet.image, :width => 200) if @cabinet.image.present? %>
 </p>
 
 <p>
