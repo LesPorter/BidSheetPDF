@@ -50,15 +50,21 @@
   <%= @bid.cabinet_mix %>
 </p>
 
-<!--<p>
-  <strong>Cabinet selection:</strong>
-  <%# @bid.cabinet.name %>
+<p>
+  <strong>Cabinet ID:</strong>
+  <%= @bid.cabinet_id %>
 </p>
 
 <p>
-  <strong>Granite selection:</strong>
-  <%# @bid.granite.name %>
-</p>-->
+  <strong>Cabinet name:</strong>
+  <%= @bid.cabinet.name %>
+</p>
+
+<p>
+  <strong>Granite ID:</strong>
+  <%= @bid.granite_id %>
+</p>
+
 
 <%= link_to 'Edit', edit_bid_path(@bid) %> |
 <%= link_to 'Back', bids_path %>
