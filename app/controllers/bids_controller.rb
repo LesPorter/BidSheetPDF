@@ -10,8 +10,6 @@ class BidsController < ApplicationController
   # GET /bids/1
   # GET /bids/1.json
   def show
-    #@cabinets = Cabinet.all
-    #@granites = Granite.all
     
     # Create the document object
     pdf = Prawn::Document.new
