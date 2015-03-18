@@ -1,7 +1,7 @@
 class Bid < ActiveRecord::Base
-  has_one :cabinet
+  belongs_to :cabinet
   #validates :cabinet_id, :name, presence: true
   
-  has_one :granite
+  belongs_to :granite
   #validates :granite_id, :name, presence: true
 end

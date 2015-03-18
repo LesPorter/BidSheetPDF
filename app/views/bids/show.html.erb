@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<p><a href="/pdfs/<%= @bid.id.to_s %>.pdf">View the Bid PDF</a></p>
+
 <p>
   <strong>Logo:</strong>
   <%= @bid.logo %>
@@ -56,8 +58,8 @@
 </p>
 
 <p>
-  <strong>Cabinet name:</strong>
-  <%= @bid.cabinet.name %>
+  <strong>Cabinet specs:</strong>
+  <%# @bid.cabinets.specs %>
 </p>
 
 <p>

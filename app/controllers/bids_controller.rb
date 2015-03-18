@@ -10,10 +10,69 @@ class BidsController < ApplicationController
   # GET /bids/1
   # GET /bids/1.json
   def show
+    @cabinets = Cabinet.all
+    @granites = Granite.all
     
     # Create the document object
     pdf = Prawn::Document.new
-    pdf.text "Hello World."
+    # pdf.text "Hello World."
+    
+    # Draw the X and Y axis - COMMENT OUT IN PRODUCTION
+    pdf.stroke_axis
+    
+    # Draw the bid sheet
+    # -------------------------------------------------------------------------
+    # Top of the document is y = 720.0
+    
+    # Header
+    pdf.fill_rectangle [0, 700], 70, 70
+    pdf.draw_text @bid.client_name, :at => [87,685], :size => 20
+    pdf.draw_text @bid.project_name, :at => [87,652], :size => 30#, :style => [:bold]
+    
+    # Format date
+    month = @bid.date.strftime('%B')
+    day = @bid.date.strftime('%d')
+    year = @bid.date.strftime('%Y')
+    formatted_date = month + " " + day + ", " + year
+    pdf.draw_text formatted_date, :at => [88,630], :size => 10
+    
+    # Left column
+    pdf.draw_text "Project Costs", :at => [0,598], :size => 18
+    
+    # Format currency
+    cabinet_cost = format("$%.2f",@bid.cabinet_cost)
+    granite_cost = format("$%.2f",@bid.granite_cost)
+    tax_cost = format("$%.2f",@bid.tax_cost)
+    total_cost = format("$%.2f",@bid.total_cost)
+    
+    pdf.draw_text "Cabinets with Installation", :at => [0,573], :size => 14
+    pdf.draw_text cabinet_cost, :at => [0,547], :size => 30
+    pdf.draw_text "Granite with Installation", :at => [0,516], :size => 14
+    pdf.draw_text granite_cost, :at => [0,490], :size => 30
+    pdf.draw_text "Tax", :at => [0,459], :size => 14
+    pdf.draw_text tax_cost, :at => [0,433], :size => 30
+    pdf.draw_text "Total", :at => [0,402], :size => 14
+    pdf.draw_text total_cost, :at => [0,376], :size => 30
+    
+    pdf.draw_text "Conditions & Information", :at => [0,320], :size => 18
+    conditions = @bid.conditions
+    pdf.bounding_box([0, 300], :width => 207, :height => 250) do
+      pdf.transparent(0.5) { pdf.stroke_bounds }
+      pdf.text conditions
+    end
+    
+    # Center column
+    pdf.draw_text "Project Costs", :at => [220,598], :size => 18
+    pdf.draw_text "Qty", :at => [220,576], :size => 10
+    cabinet_mix = @bid.cabinet_mix
+    pdf.bounding_box([220, 570], :width => 115, :height => 520) do
+      pdf.transparent(0.5) { pdf.stroke_bounds }
+      pdf.text cabinet_mix
+    end
+    
+    # Right column
+    pdf.draw_text "Cabinet Style Name", :at => [347,598], :size => 18
+    pdf.fill_rectangle [347, 583], 190, 190
     
     # Produce the PDF
     # -------------------------------------------------------------------------
