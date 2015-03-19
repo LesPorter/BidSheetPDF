@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150317180145) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "bids", force: true do |t|
     t.string   "logo"
     t.string   "client_name"
@@ -29,9 +32,6 @@ ActiveRecord::Schema.define(version: 20150317180145) do
     t.integer  "cabinet_id"
     t.integer  "granite_id"
   end
-  
-  add_index "bids", ["cabinet_id"], name: "index_bids_on_cabinet_id"
-  add_index "bids", ["granite_id"], name: "index_bids_on_granite_id"
 
   create_table "cabinets", force: true do |t|
     t.string   "name"

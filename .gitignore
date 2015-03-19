@@ -17,3 +17,6 @@
 
 # Ignore dynamically created PDFs
 /public/pdfs
+
+# Ignore uploaded images
+/public/uploads
