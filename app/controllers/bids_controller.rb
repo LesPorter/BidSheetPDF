@@ -13,10 +13,9 @@ class BidsController < ApplicationController
     
     # Create the document object
     pdf = Prawn::Document.new
-    # pdf.text "Hello World."
     
     # Draw the X and Y axis - COMMENT OUT IN PRODUCTION
-    pdf.stroke_axis
+    # pdf.stroke_axis
     
     # Draw the bid sheet
     # -------------------------------------------------------------------------
@@ -25,7 +24,7 @@ class BidsController < ApplicationController
     # Header
     pdf.fill_rectangle [0, 700], 70, 70
     pdf.draw_text @bid.client_name, :at => [87,685], :size => 20
-    pdf.draw_text @bid.project_name, :at => [87,652], :size => 30#, :style => [:bold]
+    pdf.draw_text @bid.project_name, :at => [87,652], :size => 30, :style => :bold
     
     # Format date
     month = @bid.date.strftime('%B')
@@ -35,6 +34,8 @@ class BidsController < ApplicationController
     pdf.draw_text formatted_date, :at => [88,630], :size => 10
     
     # Left column
+    # -------------------------------------------------------------------------
+    
     pdf.draw_text "Project Costs", :at => [0,598], :size => 18
     
     # Format currency
@@ -54,23 +55,60 @@ class BidsController < ApplicationController
     
     pdf.draw_text "Conditions & Information", :at => [0,320], :size => 18
     conditions = @bid.conditions
+    pdf.font_size 9
     pdf.bounding_box([0, 300], :width => 207, :height => 250) do
       pdf.transparent(0.5) { pdf.stroke_bounds }
       pdf.text conditions
     end
     
     # Center column
-    pdf.draw_text "Project Costs", :at => [220,598], :size => 18
-    pdf.draw_text "Qty", :at => [220,576], :size => 10
+    # -------------------------------------------------------------------------
+    
+    pdf.draw_text "Cabinet Mix", :at => [220,598], :size => 18
+    pdf.draw_text "Qty", :at => [220,576], :size => 10, :style => :bold
+    pdf.draw_text "SKU", :at => [250,576], :size => 10, :style => :bold
     cabinet_mix = @bid.cabinet_mix
-    pdf.bounding_box([220, 570], :width => 115, :height => 520) do
-      pdf.transparent(0.5) { pdf.stroke_bounds }
+    
+    # Replace the tab copied & pasted from the spreadsheet with spaces & hyphens
+    cabinet_mix = cabinet_mix.gsub! /\t/, '   --   '
+    pdf.font_size 9
+    pdf.bounding_box([225, 570], :width => 110, :height => 520) do
+      pdf.transparent(0.0) { pdf.stroke_bounds }  # Change 0.0 to 0.5 to turn on the border
       pdf.text cabinet_mix
     end
     
     # Right column
-    pdf.draw_text "Cabinet Style Name", :at => [347,598], :size => 18
-    pdf.fill_rectangle [347, 583], 190, 190
+    # -------------------------------------------------------------------------
+    
+    cabinet_name = @bid.cabinet.name
+    pdf.draw_text cabinet_name, :at => [347,598], :size => 18
+    
+    # Embed the cabinet image
+    cabinet_image = @bid.cabinet.image
+    pdf.image "public/" + cabinet_image.to_s, :at => [347, 583], :width => 190, :height => 190
+    
+    cabinet_specs = @bid.cabinet.specs
+    pdf.font_size 9
+    pdf.bounding_box([347, 380], :width => 190, :height => 100) do
+      pdf.transparent(0.0) { pdf.stroke_bounds }  # Change 0.0 to 0.5 to turn on the border
+      pdf.text cabinet_specs
+    end
+    granite_name = @bid.granite.name
+    pdf.draw_text granite_name, :at => [347,255], :size => 18
+    
+    # Embed the granite image
+    granite_image = @bid.granite.image
+    pdf.image "public/" + granite_image.to_s, :at => [347, 240], :width => 190, :height => 190
+    
+    # Bottom row
+    pdf.fill_rectangle [0, 15], 120, 3
+    pdf.draw_text "Signature", :at => [0,0], :size => 10
+    pdf.fill_rectangle [139, 15], 120, 3
+    pdf.draw_text "Name & Title", :at => [139,0], :size => 10
+    pdf.fill_rectangle [278, 15], 120, 3
+    pdf.draw_text "Company", :at => [278,0], :size => 10
+    pdf.fill_rectangle [417, 15], 120, 3
+    pdf.draw_text "Date", :at => [417,0], :size => 10
     
     # Produce the PDF
     # -------------------------------------------------------------------------
