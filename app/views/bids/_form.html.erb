@@ -13,7 +13,11 @@
 
   <div class="field">
     <%= f.label :logo %><br>
-    <%= f.text_field :logo %>
+    <%# f.text_field :logo %>
+    <select id="bid_logo" name="bid[logo]">
+      <option value="gcs-logo.png">GC Sourcing</option>
+      <option value="cc-logo.png">Cabinets & Coffee</option>
+    </select>
   </div>
   <div class="field">
     <%= f.label :client_name %><br>

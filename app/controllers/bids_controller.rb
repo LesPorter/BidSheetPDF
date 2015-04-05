@@ -22,7 +22,8 @@ class BidsController < ApplicationController
     # Top of the document is y = 720.0
     
     # Header
-    pdf.fill_rectangle [0, 720], 70, 70
+    logo_image = @bid.logo
+    pdf.image "app/assets/images/" + logo_image.to_s, :at => [0, 720], :width => 70, :height => 70
     pdf.draw_text @bid.client_name, :at => [87,705], :size => 20
     pdf.draw_text @bid.project_name, :at => [87,672], :size => 30, :style => :bold
     
