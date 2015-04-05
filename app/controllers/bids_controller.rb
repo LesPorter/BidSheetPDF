@@ -22,57 +22,60 @@ class BidsController < ApplicationController
     # Top of the document is y = 720.0
     
     # Header
-    pdf.fill_rectangle [0, 700], 70, 70
-    pdf.draw_text @bid.client_name, :at => [87,685], :size => 20
-    pdf.draw_text @bid.project_name, :at => [87,652], :size => 30, :style => :bold
+    pdf.fill_rectangle [0, 720], 70, 70
+    pdf.draw_text @bid.client_name, :at => [87,705], :size => 20
+    pdf.draw_text @bid.project_name, :at => [87,672], :size => 30, :style => :bold
     
     # Format date
     month = @bid.date.strftime('%B')
     day = @bid.date.strftime('%d')
     year = @bid.date.strftime('%Y')
     formatted_date = month + " " + day + ", " + year
-    pdf.draw_text formatted_date, :at => [88,630], :size => 10
+    pdf.draw_text formatted_date, :at => [88,650], :size => 10
     
     # Left column
     # -------------------------------------------------------------------------
     
-    pdf.draw_text "Project Costs", :at => [0,598], :size => 18
+    pdf.draw_text "Project Costs", :at => [0,618], :size => 18
     
     # Format currency
+    
     cabinet_cost = format("$%.2f",@bid.cabinet_cost)
+#     cabinet_cost = @bid.cabinet_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+#     cabinet_cost = number_with_delimiter(cabinet_cost, :delimiter => ',')
     granite_cost = format("$%.2f",@bid.granite_cost)
     tax_cost = format("$%.2f",@bid.tax_cost)
     total_cost = format("$%.2f",@bid.total_cost)
     
-    pdf.draw_text "Cabinets with Installation", :at => [0,573], :size => 14
-    pdf.draw_text cabinet_cost, :at => [0,547], :size => 30
-    pdf.draw_text "Granite with Installation", :at => [0,516], :size => 14
-    pdf.draw_text granite_cost, :at => [0,490], :size => 30
-    pdf.draw_text "Tax", :at => [0,459], :size => 14
-    pdf.draw_text tax_cost, :at => [0,433], :size => 30
-    pdf.draw_text "Total", :at => [0,402], :size => 14
-    pdf.draw_text total_cost, :at => [0,376], :size => 30
+    pdf.draw_text "Cabinets with Installation", :at => [0,593], :size => 14
+    pdf.draw_text cabinet_cost, :at => [0,567], :size => 30
+    pdf.draw_text "Granite with Installation", :at => [0,536], :size => 14
+    pdf.draw_text granite_cost, :at => [0,510], :size => 30
+    pdf.draw_text "Tax", :at => [0,479], :size => 14
+    pdf.draw_text tax_cost, :at => [0,453], :size => 30
+    pdf.draw_text "Total", :at => [0,422], :size => 14
+    pdf.draw_text total_cost, :at => [0,396], :size => 30
     
-    pdf.draw_text "Conditions & Information", :at => [0,320], :size => 18
+    pdf.draw_text "Conditions & Information", :at => [0,360], :size => 18
     conditions = @bid.conditions
     pdf.font_size 9
-    pdf.bounding_box([0, 300], :width => 207, :height => 250) do
-      pdf.transparent(0.5) { pdf.stroke_bounds }
+    pdf.bounding_box([0, 340], :width => 207, :height => 290) do
+      pdf.transparent(0.0) { pdf.stroke_bounds }
       pdf.text conditions
     end
     
     # Center column
     # -------------------------------------------------------------------------
     
-    pdf.draw_text "Cabinet Mix", :at => [220,598], :size => 18
-    pdf.draw_text "Qty", :at => [220,576], :size => 10, :style => :bold
-    pdf.draw_text "SKU", :at => [250,576], :size => 10, :style => :bold
+    pdf.draw_text "Cabinet Mix", :at => [220,618], :size => 18
+    pdf.draw_text "Qty", :at => [220,596], :size => 10, :style => :bold
+    pdf.draw_text "SKU", :at => [250,596], :size => 10, :style => :bold
     cabinet_mix = @bid.cabinet_mix
     
     # Replace the tab copied & pasted from the spreadsheet with spaces & hyphens
     cabinet_mix = cabinet_mix.gsub! /\t/, '   --   '
     pdf.font_size 9
-    pdf.bounding_box([225, 570], :width => 110, :height => 520) do
+    pdf.bounding_box([225, 590], :width => 110, :height => 540) do
       pdf.transparent(0.0) { pdf.stroke_bounds }  # Change 0.0 to 0.5 to turn on the border
       pdf.text cabinet_mix
     end
@@ -81,15 +84,15 @@ class BidsController < ApplicationController
     # -------------------------------------------------------------------------
     
     cabinet_name = @bid.cabinet.name
-    pdf.draw_text cabinet_name, :at => [347,598], :size => 18
+    pdf.draw_text cabinet_name, :at => [347,618], :size => 18
     
     # Embed the cabinet image
     cabinet_image = @bid.cabinet.image
-    pdf.image "public/" + cabinet_image.to_s, :at => [347, 583], :width => 190, :height => 190
+    pdf.image "public/" + cabinet_image.to_s, :at => [347, 603], :width => 190, :height => 190
     
     cabinet_specs = @bid.cabinet.specs
     pdf.font_size 9
-    pdf.bounding_box([347, 380], :width => 190, :height => 100) do
+    pdf.bounding_box([347, 400], :width => 190, :height => 120) do
       pdf.transparent(0.0) { pdf.stroke_bounds }  # Change 0.0 to 0.5 to turn on the border
       pdf.text cabinet_specs
     end
@@ -101,10 +104,12 @@ class BidsController < ApplicationController
     pdf.image "public/" + granite_image.to_s, :at => [347, 240], :width => 190, :height => 190
     
     # Bottom row
+    # -------------------------------------------------------------------------
+    
     pdf.fill_rectangle [0, 15], 120, 3
     pdf.draw_text "Signature", :at => [0,0], :size => 10
     pdf.fill_rectangle [139, 15], 120, 3
-    pdf.draw_text "Name & Title", :at => [139,0], :size => 10
+    pdf.draw_text "Full Name", :at => [139,0], :size => 10
     pdf.fill_rectangle [278, 15], 120, 3
     pdf.draw_text "Company", :at => [278,0], :size => 10
     pdf.fill_rectangle [417, 15], 120, 3
