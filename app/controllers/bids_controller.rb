@@ -39,13 +39,17 @@ class BidsController < ApplicationController
     pdf.draw_text "Project Costs", :at => [0,618], :size => 18
     
     # Format currency
-    
-    cabinet_cost = format("$%.2f",@bid.cabinet_cost)
-#     cabinet_cost = @bid.cabinet_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
-#     cabinet_cost = number_with_delimiter(cabinet_cost, :delimiter => ',')
+    cabinet_cost = format("$%.2f",@bid.cabinet_cost)  # Round cents to 2 digits & add a dollar sign
+    cabinet_cost = cabinet_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse  # Add a comma every 3 digits
+
     granite_cost = format("$%.2f",@bid.granite_cost)
+    granite_cost = granite_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+    
     tax_cost = format("$%.2f",@bid.tax_cost)
+    tax_cost = tax_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+    
     total_cost = format("$%.2f",@bid.total_cost)
+    total_cost = total_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     
     pdf.draw_text "Cabinets with Installation", :at => [0,593], :size => 14
     pdf.draw_text cabinet_cost, :at => [0,567], :size => 30
