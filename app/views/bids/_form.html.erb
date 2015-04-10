@@ -36,13 +36,29 @@
     <%= f.text_field :cabinet_cost %>
   </div>
   <div class="field">
+    <%= f.label :cabinet_delivery %><br>
+    <%= f.check_box :cabinet_delivery %>
+  </div>
+  <div class="field">
+    <%= f.label :cabinet_removal %><br>
+    <%= f.check_box :cabinet_removal %>
+  </div>
+  <div class="field">
+    <%= f.label :cabinet_installation %><br>
+    <%= f.check_box :cabinet_installation %>
+  </div>
+  <div class="field">
+    <%= f.label :cabinet_tax %><br>
+    <%= f.check_box :cabinet_tax %>
+  </div>
+  <div class="field">
     <%= f.label :granite_cost %><br>
     <%= f.text_field :granite_cost %>
   </div>
-  <div class="field">
-    <%= f.label :tax_cost %><br>
-    <%= f.text_field :tax_cost %>
-  </div>
+  <!--<div class="field">
+    <%# f.label :tax_cost %><br>
+    <%# f.text_field :tax_cost %>
+  </div>-->
   <div class="field">
     <%= f.label :total_cost %><br>
     <%= f.text_field :total_cost %>
