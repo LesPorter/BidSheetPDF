@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410022523) do
+ActiveRecord::Schema.define(version: 20150412032545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,11 @@ ActiveRecord::Schema.define(version: 20150410022523) do
     t.boolean  "cabinet_removal"
     t.boolean  "cabinet_installation"
     t.boolean  "cabinet_tax"
+    t.boolean  "cabinet_knobspulls"
+    t.boolean  "granite_tax"
+    t.boolean  "granite_installation"
+    t.boolean  "granite_sinks"
+    t.boolean  "granite_specialtyedge"
   end
 
   create_table "cabinets", force: true do |t|

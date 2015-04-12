@@ -71,6 +71,10 @@ class BidsController < ApplicationController
       cabinet_includes_count += 1
       cabinet_includes = cabinet_includes + "installation, "
     end
+    if @bid.cabinet_knobspulls == true
+      cabinet_includes_count += 1
+      cabinet_includes = cabinet_includes + "knobs/pulls, "
+    end
     if @bid.cabinet_tax == true
       cabinet_includes_count += 1
       cabinet_includes = cabinet_includes + "taxes, "
@@ -85,15 +89,51 @@ class BidsController < ApplicationController
     if cabinet_includes_count > 0
       cabinet_includes = "Includes " + cabinet_includes + "."
     end
-    
     pdf.font_size 9
     pdf.bounding_box([0, 561], :width => 207, :height => 30) do
       pdf.transparent(0.0) { pdf.stroke_bounds }
       pdf.text cabinet_includes
     end
     
-    pdf.draw_text "Granite", :at => [0,506], :size => 14
+    pdf.draw_text "Counter Tops", :at => [0,506], :size => 14
     pdf.draw_text granite_cost, :at => [0,480], :size => 30
+    
+    # Assemble include statement for counter tops
+    counter_includes = ""
+    counter_includes_count = 0
+    # Make a string of includes, separated by commas
+    if @bid.granite_installation == true
+      counter_includes_count += 1
+      counter_includes = "installation, "
+    end
+    if @bid.granite_sinks == true
+      counter_includes_count += 1
+      counter_includes = counter_includes + "sinks, "
+    end
+    if @bid.granite_specialtyedge == true
+      counter_includes_count += 1
+      counter_includes = counter_includes + "specialty edge, "
+    end
+    if @bid.granite_tax == true
+      counter_includes_count += 1
+      counter_includes = counter_includes + "taxes, "
+    end
+    # Remove the trailing comma and space
+    counter_includes = counter_includes[0...-2]
+    # If there are just two includes use " and " instead of a comma
+    if counter_includes_count == 2
+      counter_includes.gsub! ', ', ' and '
+    end
+    # Add the beginning and end of the sentence if there's at least one include.
+    if counter_includes_count > 0
+      counter_includes = "Includes " + counter_includes + "."
+    end
+    pdf.font_size 9
+    pdf.bounding_box([0, 474], :width => 207, :height => 30) do
+      pdf.transparent(0.0) { pdf.stroke_bounds }
+      pdf.text counter_includes
+    end
+    
 #     pdf.draw_text "Tax", :at => [0,479], :size => 14
 #     pdf.draw_text tax_cost, :at => [0,453], :size => 30
     pdf.draw_text "Total", :at => [0,422], :size => 14
@@ -223,6 +263,6 @@ class BidsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bid_params
-      params.require(:bid).permit(:logo, :client_name, :project_name, :date, :cabinet_cost, :cabinet_delivery, :cabinet_removal, :cabinet_installation, :cabinet_tax, :granite_cost, :total_cost, :conditions, :cabinet_mix, :cabinet_id, :granite_id)
+      params.require(:bid).permit(:logo, :client_name, :project_name, :date, :cabinet_cost, :cabinet_delivery, :cabinet_removal, :cabinet_installation, :cabinet_knobspulls, :cabinet_tax, :granite_cost, :granite_tax, :granite_installation, :granite_sinks, :granite_specialtyedge, :total_cost, :conditions, :cabinet_mix, :cabinet_id, :granite_id)
     end
 end
