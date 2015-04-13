@@ -46,8 +46,8 @@ class BidsController < ApplicationController
     granite_cost = format("$%.2f",@bid.granite_cost)
     granite_cost = granite_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     
-    tax_cost = format("$%.2f",@bid.tax_cost)
-    tax_cost = tax_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+#     tax_cost = format("$%.2f",@bid.tax_cost)
+#     tax_cost = tax_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     
     total_cost = format("$%.2f",@bid.total_cost)
     total_cost = total_cost.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
